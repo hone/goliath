@@ -26,6 +26,7 @@ GEM
     rack (1.6.0)
     rack-test (0.6.3)
       rack (>= 1.0)
+    rake (10.4.0)
     ref (1.0.5)
     rspec (3.2.0)
       rspec-core (~> 3.2.0)
@@ -55,5 +56,6 @@ DEPENDENCIES
   concurrent-ruby-ext
   nokogiri
   poltergeist
+  rake
   rspec
   thor
