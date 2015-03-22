@@ -9,7 +9,7 @@ module Goliath
     def run(links)
       links.each do |link|
         @pool.post(link) do
-          `curl -o #{link.name} -s -S "#{link.href}"`
+          `curl -C - -o #{link.name} -s -S "#{link.href}"`
         end
       end
 
