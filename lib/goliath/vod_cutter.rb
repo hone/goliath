@@ -1,38 +1,55 @@
-require 'capybara/poltergeist'
+require 'uri'
+require 'net/http'
+require 'm3u8'
+require 'json'
 
 module Goliath
   class VodCutter
-    include Capybara::DSL
-
-    VOD_CUTTER_URL = "http://www.twitch-vod-cutter.appspot.com/"
-    TimeStruct = Struct.new(:hour, :minute, :second)
+    LinkStruct = Struct.new(:href, :name)
 
     def initialize(sleep_time: 5)
-      Capybara.current_driver = :poltergeist
       @sleep_time = sleep_time
     end
 
-    def fetch(url:, start:, finish:)
-      start_time  = construct_time(start)
-      finish_time = construct_time(finish)
-
-      visit(VOD_CUTTER_URL)
-      find("input[ng-model='vod_id']").set(url)
-      find("input[ng-model='sh']").set(start_time.hour)
-      find("input[ng-model='sm']").set(start_time.minute)
-      find("input[ng-model='ss']").set(start_time.second)
-      find("input[ng-model='eh']").set(finish_time.hour)
-      find("input[ng-model='em']").set(finish_time.minute)
-      find("input[ng-model='es']").set(finish_time.second)
-      find("button").click
-      sleep(@sleep_time) # wait for javascript to finish executing
-      save_page("vod_parts.html")
+    def fetch(vod_id:)
+      access_token = fetch_access_token(vod_id)
+      m3u8_url     = fetch_hls_vod(access_token)
+      fetch_vod_urls(m3u8_url)
     end
 
-    private
-    def construct_time(time)
-      hour, minute, second = time.split(":")
-      TimeStruct.new(hour, minute, second)
+    def fetch_access_token(vod_id)
+      uri = URI("https://api.twitch.tv/api/vods/#{vod_id}/access_token")
+      JSON.parse(Net::HTTP.get(URI(uri)))
+    end
+
+    def fetch_hls_vod(access_token, video_type = "chunked")
+      token  = JSON.parse(access_token["token"])
+      vod_id = token["vod_id"]
+      sig    = access_token["sig"]
+      uri    = URI("http://usher.twitch.tv/vod/#{vod_id}?nauthsig=#{sig}&nauth=#{URI.encode(token.to_json)}")
+      m3u8   = M3u8::Playlist.read(Net::HTTP.get(uri))
+
+      m3u8.items.detect {|item| item.uri && item.video == video_type }.uri
+    end
+
+    def fetch_vod_urls(m3u8_url)
+      uri        =  URI(m3u8_url)
+      m3u8       = M3u8::Playlist.read(Net::HTTP.get(uri))
+      path_parts = uri.path.split("/")[0..-2]
+      links      = []
+      m3u8.items.each_with_index do |item, index|
+        next if item.segment == "#EXT-X-ENDLIST"
+        item_path, item_query = item.segment.split("?")
+        segment_uri = URI::HTTP.build(
+            host: uri.host,
+            path: (path_parts + [item_path]).join("/"),
+            query: item_query
+        )
+        filename    = "piece#{(index + 1).to_s.rjust(3, "0")}.ts"
+        links << LinkStruct.new(segment_uri.to_s, filename)
+      end
+
+      links
     end
   end
 end

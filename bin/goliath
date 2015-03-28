@@ -7,33 +7,18 @@ require 'thor'
 module Goliath
   class CLI < Thor
     desc "download VOD_URL", "Download Twitch VOD"
-    option :start,
-      desc: "Start time of the video. Format is in HH:MM:SS.",
-      type: :string,
-      default: "00:00:00"
-    option :finish,
-      desc: "Finish time of the video. Format is in HH:MM:SS.",
-      type: :string,
-      required: true
     option :output,
       desc: "Output file of the VOD.",
       type: :string,
       required: true
-    def download(url)
+    def download(vod_id)
       require 'goliath/vod_cutter'
-      require 'goliath/link_grabber'
       require 'goliath/downloader'
       require 'goliath/joiner'
 
-      vod_id = url.split("/").last
       FileUtils.mkdir_p(vod_id)
       Dir.chdir(vod_id) do
-        VodCutter.new.fetch(
-          url:    url,
-          start:  options[:start],
-          finish: options[:finish]
-        )
-        links = LinkGrabber.new.grab("vod_parts.html")
+        links = VodCutter.new.fetch(vod_id: vod_id)
 
         parts_dir = "parts"
         FileUtils.mkdir_p(parts_dir)

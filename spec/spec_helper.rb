@@ -1,4 +1,8 @@
+require_relative "helpers/path_helper"
+
 RSpec.configure do |config|
+  include PathHelper
+
   config.run_all_when_everything_filtered = true
   config.filter_run :focus
 
