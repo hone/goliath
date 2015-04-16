@@ -1,0 +1,84 @@
+{
+  "api_id": "a645731990",
+  "start_offset": 0,
+  "end_offset": 16898,
+  "play_offset": 0,
+  "increment_view_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22archive%22%2C%22id%22%3A645731990%7D",
+  "path": "\/esl_evolve\/b\/645731990",
+  "duration": 1711,
+  "broadcaster_software": "fme",
+  "channel": "esl_evolve",
+  "chunks": {
+    "live": [
+      {
+        "url": "http:\/\/store118.media85.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428163437.flv",
+        "length": 1711,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6457319904%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store141.media95.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428165150.flv",
+        "length": 1711,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6457411934%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store162.media106.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428166862.flv",
+        "length": 1710,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6457506964%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store114.media79.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428168572.flv",
+        "length": 1711,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6457603614%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store148.media99.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428170284.flv",
+        "length": 1710,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6457704484%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store78.media60.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428171994.flv",
+        "length": 1710,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6457809424%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store122.media87.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428173704.flv",
+        "length": 1711,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6457919374%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store178.media114.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428175415.flv",
+        "length": 1710,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6458033244%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store53.media50.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428177126.flv",
+        "length": 1711,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6458152934%7D",
+        "upkeep": "pass"
+      },
+      {
+        "url": "http:\/\/store91.media67.justin.tv\/archives\/2015-4-4\/live_user_esl_evolve_1428178837.flv",
+        "length": 1503,
+        "vod_count_url": "http:\/\/countess.twitch.tv\/ping.gif?u=%7B%22type%22%3A%22vod%22%2C%22id%22%3A6458258354%7D",
+        "upkeep": "pass"
+      }
+    ]
+  },
+  "restrictions": {
+    
+  },
+  "preview_small": "http:\/\/static-cdn.jtvnw.net\/jtv.thumbs\/archive-645731990-150x113.jpg",
+  "preview": "http:\/\/static-cdn.jtvnw.net\/jtv.thumbs\/archive-645731990-320x240.jpg",
+  "vod_ad_frequency": 0,
+  "vod_ad_length": 0,
+  "muted_segments": null,
+  "can_highlight": true
+}

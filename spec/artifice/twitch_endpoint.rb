@@ -11,4 +11,8 @@ class TwitchEndpoint < Sinatra::Base
   get "/v1/AUTH_system/vods_5370/evolvegame_13456540144_214066425/chunked/index-dvr.m3u8" do
     File.read(fixtures_path("index-dvr.m3u8"))
   end
+
+  get "/api/videos/a:id" do
+    File.read(fixtures_path("#{params[:id]}_old_playlist.json"))
+  end
 end

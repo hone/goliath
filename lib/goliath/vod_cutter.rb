@@ -5,8 +5,6 @@ require 'json'
 
 module Goliath
   class VodCutter
-    LinkStruct = Struct.new(:href, :name)
-
     def initialize(sleep_time: 5)
       @sleep_time = sleep_time
     end
@@ -36,8 +34,7 @@ module Goliath
       uri        =  URI(m3u8_url)
       m3u8       = M3u8::Playlist.read(Net::HTTP.get(uri))
       path_parts = uri.path.split("/")[0..-2]
-      links      = []
-      m3u8.items.each_with_index do |item, index|
+      m3u8.items.map do |item|
         next if item.segment == "#EXT-X-ENDLIST"
         item_path, item_query = item.segment.split("?")
         segment_uri = URI::HTTP.build(
@@ -45,11 +42,8 @@ module Goliath
             path: (path_parts + [item_path]).join("/"),
             query: item_query
         )
-        filename    = "piece#{(index + 1).to_s.rjust(3, "0")}.ts"
-        links << LinkStruct.new(segment_uri.to_s, filename)
-      end
-
-      links
+        segment_uri.to_s
+      end.compact
     end
   end
 end

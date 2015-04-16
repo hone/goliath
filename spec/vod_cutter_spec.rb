@@ -19,7 +19,7 @@ describe Goliath::VodCutter do
 
     it "should fetch the hls vod for chunked video", internet: true do
       access_token = vod_cutter.fetch_access_token(vod_id)
-      expect(vod_cutter.fetch_hls_vod(access_token).uri).to include("/chunked/index-dvr.m3u8")
+      expect(vod_cutter.fetch_hls_vod(access_token)).to include("/chunked/index-dvr.m3u8")
     end
 
     context "mocked http calls" do
@@ -55,12 +55,7 @@ describe Goliath::VodCutter do
             index-0000000014-n2GZ.ts?start_offset=12191800&end_offset=13112999
             index-0000000014-n2GZ.ts?start_offset=13113000&end_offset=14060895
             index-0000000029-0dQb.ts?start_offset=0&end_offset=1417331
-          )
-          index = 0
-          files.map do |f|
-            index += 1
-            Goliath::VodCutter::LinkStruct.new("http://vod.ak.hls.ttvnw.net/v1/AUTH_system/vods_5370/evolvegame_13456540144_214066425/chunked/#{f}", "piece#{index.to_s.rjust(3, "0")}.ts")
-          end
+          ).map {|file| "http://vod.ak.hls.ttvnw.net/v1/AUTH_system/vods_5370/evolvegame_13456540144_214066425/chunked/#{file}" }
         }
 
         it "should generate vod urls to download" do
