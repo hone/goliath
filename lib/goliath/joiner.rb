@@ -1,7 +1,7 @@
 module Goliath
   class Joiner
-    def build(output:, options:)
-      links = Dir.glob("parts/*.ts").sort
+    def build(output:, options:, extension: "ts")
+      links = Dir.glob("parts/*.#{extension}").sort
       construct_index(links)
       `ffmpeg -f concat -i index.txt -c copy #{options} #{output}`
     end
