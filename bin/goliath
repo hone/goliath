@@ -12,43 +12,13 @@ module Goliath
       type: :string,
       required: true
     def download(twitch_url)
-      require 'goliath/piece_namer'
-      require 'goliath/downloader'
-      require 'goliath/joiner'
-
-      style =
-        if twitch_url.match(%r{/v/\d+$})
-          :hls_vod
-        else
-          :old
-        end
       vod_id = twitch_url.split("/").last
-
-      dir = options[:output].split(".")
-      dir.pop
-      dir = dir.join(".")
-      FileUtils.mkdir_p(dir)
-      Dir.chdir(dir) do
-        links         = nil
-        extension     = nil
-        ffmpeg_option = nil
-        if style == :hls_vod
-          require 'goliath/vod_cutter'
-          links     = VodCutter.new.fetch(vod_id: vod_id)
-          extension = "ts"
-        else
-          require 'goliath/old_vod_cutter'
-          links = OldVodCutter.new.fetch(vod_id: vod_id)
-          extension = "flv"
-          ffmpeg_option = "-bsf:v h264_mp4toannexb"
-        end
-
-        links = PieceNamer.new.generate(links, extension: extension)
-        parts_dir = "parts"
-        FileUtils.mkdir_p(parts_dir)
-        Dir.chdir(parts_dir) { Downloader.new.run(links) }
-        Joiner.new.build(output: options[:output], options: ffmpeg_option)
-        puts "Built #{dir}/#{options[:output]}"
+      if twitch_url.match(%r{/v/\d+$})
+        require 'goliath/vod'
+        Vod.new(vod_id: vod_id, output: options[:output]).download
+      else
+        require 'goliath/old_vod'
+        OldVod.new(vod_id: vod_id, output: options[:output]).download
       end
     end
   end
