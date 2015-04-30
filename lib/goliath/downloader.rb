@@ -1,3 +1,4 @@
+require 'net/http'
 require 'concurrent'
 
 module Goliath
@@ -9,7 +10,18 @@ module Goliath
     def run(links)
       links.each do |link|
         @pool.post(link) do
-          `curl -C - -o #{link.name} -s -S "#{link.href}"`
+          uri = URI(link.href)
+
+          Net::HTTP.start(uri.host, uri.port) do |http|
+            request = Net::HTTP::Get.new uri
+            request.set_range((File.size(link.name)..-1)) if File.exist?(link.name)
+            http.request(request) do |response|
+              File.open(link.name, 'ab') do |io|
+                response.read_body {|chunk| io.write chunk }
+              end
+            end
+          end
+
         end
       end
 
